@@ -4,22 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>carlo</title>
+    
     <style>
-        input{
-            background-color: greenyellow;
-            display: block;
-            margin: 5px;
+        body{
+             background-image: url("file:///C:/Users/INSCRIPCIONES/Downloads/Demon-Slayer-Rengoku-1.webp");
+             background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat; 
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            height: 100vh; 
+            margin: 0;     
+            }
+            #caja {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
         }
-</style>
+        input{
+            background-color: yellow;
+            color: red;
+            display: block;
+            margin: 10px;
+             padding: 8px;
+            border: 1px solid orangered;
+            width: 200px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: red;
+            color: yellow;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            }
+              h2 {
+            color: white;
+            margin-top: 20px;
+            font-size: 1.5em;
+            }
+            .label-text {
+              color: white; /* Aquí se cambia el color a blanco */
+              font-weight: bold;
+              font-size: 1.2em;
+             }
+    </style>
 </head>
 <body>
-    peso
-    <input type="number" value="peso" id="npeso">
-    altura
-    <input type="number" value="altura" id="naltura">
-    <button onclick="Calculo()">calcular</button>
-     
-    <h2 id = "calcular"> </h2>
+    <div id="caja">
+      <span class="label-text">peso</span>
+        <input type="number" value="peso" id="npeso">
+        <span class="label-text">altura</span>
+        <input type="number" value="altura" id="naltura">
+        <button onclick="Calculo()">calcular</button>
+        <h2 id = "calcular"> </h2>
+    </div>
  <script type="text/javascript">
     function Calculo() {
         var peso= npeso.value;
@@ -30,7 +74,9 @@
         }else{
             calcular.innerText = "sobrepeso"
         }
+        
     }
+
  </script>
 </body>
 </html>
