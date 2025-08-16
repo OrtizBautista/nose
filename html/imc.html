@@ -42,6 +42,7 @@
             border-radius: 5px;
             margin-top: 10px;
             font-weight: bold;
+            
             }
               h2 {
             color: white;
@@ -62,6 +63,7 @@
             display: none; /* ocultar por defecto */
             margin-left: auto;  /* estas dos líneas */
             margin-right: auto; /* lo centran como bloque */
+            
 
             
 
@@ -75,11 +77,14 @@
         <span class="label-text">Altura (m)</span>
         <input type="number" id="naltura" placeholder="Ej: 1.75" step="any">
         <button onclick="Calculo()">calcular</button>
+        <button onclick="resetear()">Resetear</button>
        
         <img id="imagen" src="" alt="Resultado">
          <h2 id="resultado-texto"></h2>
     </div>
  <script type="text/javascript">
+    
+    
     function Calculo() {
         var peso = parseFloat(document.getElementById("npeso").value);
         var altura = parseFloat(document.getElementById("naltura").value);
@@ -91,7 +96,7 @@
                 alert("Por favor ingresa valores válidos");
                 return;
                 }
-         var imc = peso / (altura * altura);
+         var imc = (peso / (altura * altura)).toFixed(2);
         if (imc<24.9){
             imagen.src = "./img/normal.jpg"; // Imagen para normal
             texto.innerText = `IMC: ${imc} — ¡Excelente! Tu peso está dentro de un rango saludable.`;
@@ -102,7 +107,28 @@
             texto.innerText = `IMC: ${imc} — Tu peso está por encima del rango saludable. Considera hábitos más activos.`;
         }
         imagen.style.display = "block"; // Mostrar imagen
+        
+        
+        
     }
+    function resetear(){
+        document.getElementById("npeso").value = "";
+        document.getElementById("naltura").value = "";
+        document.getElementById("resultado-texto").innerText = "";
+        document.getElementById("imagen").style.display = "none";
+        }
+        document.getElementById("npeso").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            Calculo();
+        }
+    });
+    document.getElementById("naltura").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            Calculo();
+        }
+    });
 
  </script>
 </body>
