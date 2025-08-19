@@ -7,7 +7,7 @@
     
     <style>
         body{
-             background-image: url("./img/kyojuro\ background.jpeg");
+             background-image: url("./img/kyojuro background.jpeg");
              background-size: cover; 
             background-position: center;
             background-repeat: no-repeat; 
@@ -16,8 +16,8 @@
             align-items: center; 
             height: 100vh; 
             margin: 0;     
-            }
-            #caja {
+        }
+        #caja {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
@@ -28,7 +28,7 @@
             color: red;
             display: block;
             margin: 10px;
-             padding: 8px;
+            padding: 8px;
             border: 1px solid orangered;
             width: 200px;
             box-sizing: border-box;
@@ -42,32 +42,31 @@
             border-radius: 5px;
             margin-top: 10px;
             font-weight: bold;
-            
-            }
-              h2 {
+        }
+        h2 {
             color: white;
             margin-top: 20px;
             font-size: 1.5em;
-            }
-            .label-text {
-              color: white; /* Aquí se cambia el color a blanco */
-              font-weight: bold;
-              font-size: 1.2em;
-             }
-             
-             
-
-             img {
+        }
+        .label-text {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        img {
             max-width: 200px;
             margin-top: 20px;
             display: none; /* ocultar por defecto */
-            margin-left: auto;  /* estas dos líneas */
-            margin-right: auto; /* lo centran como bloque */
-            
-
-            
-
-            }
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn { /* 🔹 CAMBIO */
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -76,60 +75,77 @@
        <input type="number" id="npeso" placeholder="Ej: 70" step="any">
         <span class="label-text">Altura (m)</span>
         <input type="number" id="naltura" placeholder="Ej: 1.75" step="any">
-        <button onclick="Calculo()">calcular</button>
+        <button onclick="Calculo()">Calcular</button>
         <button onclick="resetear()">Resetear</button>
        
         <img id="imagen" src="" alt="Resultado">
          <h2 id="resultado-texto"></h2>
     </div>
  <script type="text/javascript">
-    
-    
     function Calculo() {
         var peso = parseFloat(document.getElementById("npeso").value);
         var altura = parseFloat(document.getElementById("naltura").value);
         var imagen = document.getElementById("imagen");
         var texto = document.getElementById("resultado-texto");
-         if (isNaN(peso) || isNaN(altura) || altura <= 0) {
-                imagen.style.display = "none";
-                texto.innerText = ""; // limpiar el texto
-                alert("Por favor ingresa valores válidos");
-                return;
-                }
-         var imc = (peso / (altura * altura)).toFixed(2);
-        if (imc<24.9){
-            imagen.src = "./img/normal.jpg"; // Imagen para normal
-            texto.innerText = `IMC: ${imc} — ¡Excelente! Tu peso está dentro de un rango saludable.`;
 
-            
-        }else{
-            imagen.src = "./img/sobrepeso.jpg"; // Imagen para sobrepeso
-            texto.innerText = `IMC: ${imc} — Tu peso está por encima del rango saludable. Considera hábitos más activos.`;
+        if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+            imagen.style.display = "none";
+            texto.innerText = ""; 
+            alert("Por favor ingresa valores válidos");
+            return;
         }
-        imagen.style.display = "block"; // Mostrar imagen
-        
-        
-        
+
+        var imc = (peso / (altura * altura)).toFixed(2);
+
+        if (imc < 18.5) {
+            imagen.src = "./img/bajopeso.jpg"; 
+            texto.innerText = `IMC: ${imc} — Estás en bajo peso. Considera mejorar tu alimentación.`;
+            texto.style.color = "lightblue";
+        } else if (imc < 24.9) {
+            imagen.src = "./img/normal.jpg"; 
+            texto.innerText = `IMC: ${imc} — ¡Excelente! Tu peso está dentro de un rango saludable.`;
+            texto.style.color = "lightgreen";
+        } else if (imc < 29.9) {
+            imagen.src = "./img/sobrepeso.jpg"; 
+            texto.innerText = `IMC: ${imc} — Estás en sobrepeso. Intenta mantener hábitos más activos.`;
+            texto.style.color = "orange";
+        } else {
+            imagen.src = "./img/obesidad.jpg"; 
+            texto.innerText = `IMC: ${imc} — Estás en obesidad. Es recomendable consultar con un profesional.`;
+            texto.style.color = "red";
+        }
+
+        imagen.style.display = "block"; 
+        imagen.classList.remove("fade-in"); // reinicia animación
+        void imagen.offsetWidth; // fuerza reinicio de animación
+        imagen.classList.add("fade-in"); // aplica fade-in
+        texto.classList.remove("fade-in"); // reinicia animación
+        void texto.offsetWidth; 
+        texto.classList.add("fade-in"); // aplica fade-in
     }
+
     function resetear(){
         document.getElementById("npeso").value = "";
         document.getElementById("naltura").value = "";
         document.getElementById("resultado-texto").innerText = "";
+        document.getElementById("resultado-texto").style.color = "white";
         document.getElementById("imagen").style.display = "none";
-        }
-        document.getElementById("npeso").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            Calculo();
-        }
-    });
+    }
+
+    ddocument.getElementById("naltura").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        Calculo();
+        resetear(); // 🔹 CAMBIO: resetea automáticamente los inputs después de calcular
+    }
+});
+
     document.getElementById("naltura").addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             Calculo();
         }
     });
-
  </script>
 </body>
 </html>
