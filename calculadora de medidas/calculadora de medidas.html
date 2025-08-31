@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><!-- Definimos la codificación de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Hace que la página se adapte a móviles -->
+    <title>Calculadora de Medidas</title><!-- Título de la página -->
+
+    <style>
+        /* Estilos para el cuerpo de la página */
+        body {
+            background-image: url(./assets/background.jpeg); /* Imagen de fondo */
+            background-repeat: no-repeat; /* No repetir la imagen */
+            background-size: cover; /* Que la imagen cubra toda la pantalla */
+            display: flex; /* Usamos flexbox para centrar la caja */
+            justify-content: center; /* Centrado horizontal */
+            align-items: center; /* Centrado vertical */
+            height: 100vh; /* Altura de la pantalla completa */
+            margin: 0; /* Eliminamos márgenes */
+        }
+
+        /* Caja negra central */
+        #caja {
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo negro semitransparente */
+            padding: 20px; /* Espacio dentro de la caja */
+            border-radius: 10px; /* Bordes redondeados */
+            text-align: center; /* Centramos el contenido */
+        }
+
+        /* Estilo para input tipo número */
+        input[type="number"] {
+            background-color: rgba(0, 211, 200, 0.7); /* Fondo aqua transparente */
+            color: rgb(198, 255, 255); /* Color del texto */
+            margin: 5px; /* Margen alrededor del input */
+            padding: 10px 20px; /* Espacio dentro del input */
+            border: solid rgb(198, 255, 255); /* Borde del input */
+            box-sizing: border-box; /* Incluye padding y borde en el ancho */
+            border-radius: 100px; /* Bordes redondeados */
+        }
+
+        /* Estilo para input tipo botón */
+        input[type="button"] {
+            background-color: rgba(108, 250, 139, 0.7); /* Fondo verde transparente */
+            color: rgb(213, 253, 222); /* Color del texto */
+            margin: 5px;
+            padding: 10px 20px;
+            border: solid rgb(172, 248, 189);
+            box-sizing: border-box;
+            border-radius: 100px;
+            cursor: pointer; /* Cambia el cursor al pasar por encima */
+        }
+
+        /* Estilo para los select */
+        select {
+            background-color: rgba(255, 208, 154, 0.7); /* Fondo naranja claro transparente */
+            color: rgb(255, 115, 0); /* Color del texto */
+            margin: 5px;
+            padding: 10px 20px;
+            border: solid rgb(248, 206, 172);
+            box-sizing: border-box;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        /* Estilo para el resultado */
+        p {
+            color: white; /* Texto blanco */
+            font-size: 20px; /* Tamaño del texto */
+            font-weight: bold; /* Negrita */
+            margin-top: 15px; /* Separación con los inputs */
+            text-align: center; /* Centrado horizontal */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Caja central donde está la calculadora -->
+    <div id="caja">   
+
+        <!-- Input para ingresar el valor a convertir -->
+        <input type="number" id="medida" placeholder="Ingresa un valor">
+
+        <!-- Select para elegir la unidad de origen -->
+        <select id="unidad_de_origen">
+            <option value=""></option><!-- Opción vacía -->
+            <option value="m">Metros</option>
+            <option value="cm">Centímetros</option>
+            <option value="km">Kilómetros</option>
+        </select>
+
+        <!-- Select para elegir la unidad de destino -->
+        <select id="unidad_de_destino">
+            <option value=""></option><!-- Opción vacía -->
+            <option value="m">Metros</option>
+            <option value="cm">Centímetros</option>
+            <option value="km">Kilómetros</option>
+        </select>
+
+        <!-- Botón para calcular -->
+        <input type="button" id="btnCalcular" value="=" onclick="calcular()">
+
+        <!-- Párrafo donde se mostrará el resultado -->
+        <p id="resultado"></p>
+
+        <!-- Script de JavaScript -->
+        <script>
+            function calcular() {
+                // Tomamos el valor ingresado en el input
+                let valor = document.getElementById("medida").value; // "valor" guarda el número ingresado
+                valor = parseFloat(valor); // Convertimos el valor de texto a número decimal
+
+                // Tomamos la unidad de origen seleccionada
+                let origen = document.getElementById("unidad_de_origen").value; // "origen" guarda la unidad de donde viene el valor
+
+                // Tomamos la unidad de destino seleccionada
+                let destino = document.getElementById("unidad_de_destino").value; // "destino" guarda la unidad a la que queremos convertir
+
+                // Convertimos el valor ingresado a metros como base
+                let valorEnMetros; 
+                if (origen === "m") valorEnMetros = valor; // Si ya está en metros, no hacemos nada
+                else if (origen === "cm") valorEnMetros = valor / 100; // Si está en cm, pasamos a metros dividiendo entre 100
+                else if (origen === "km") valorEnMetros = valor * 1000; // Si está en km, pasamos a metros multiplicando por 1000
+
+                // Convertimos de metros a la unidad de destino
+                let resultado; 
+                if (destino === "m") resultado = valorEnMetros; // Si la unidad destino es metros, usamos directamente
+                else if (destino === "cm") resultado = valorEnMetros * 100; // Si destino es cm, multiplicamos por 100
+                else if (destino === "km") resultado = valorEnMetros / 1000; // Si destino es km, dividimos entre 1000
+
+                // Mostramos el resultado en el párrafo de la página
+                document.getElementById("resultado").innerText = "Resultado: " + resultado + " " + destino;
+            }
+        </script>
+    </div>
+</body>
+</html>
