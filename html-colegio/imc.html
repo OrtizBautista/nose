@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><!-- Definimos la codificación de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Hace que la página se adapte a móviles -->
+    <title>carlo</title><!-- Título de la página -->
+
+    <style>
+        /* Cuerpo de la página con fondo y centrado */
+        body {
+            background-image: url("./img/kyojuro background.jpeg"); /* Imagen de fondo */
+            background-size: cover; /* Que cubra toda la pantalla */
+            background-position: center; /* Centrado de la imagen */
+            background-repeat: no-repeat; /* No repetir imagen */
+            display: flex; /* Flexbox para centrar la caja */
+            justify-content: center; /* Centrado horizontal */
+            align-items: center; /* Centrado vertical */
+            height: 100vh; /* Altura de la ventana completa */
+            margin: 0; /* Sin márgenes */
+        }
+
+        /* Caja central negra semitransparente */
+        #caja {
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo negro semi-transparente */
+            padding: 20px; /* Espacio interno */
+            border-radius: 10px; /* Bordes redondeados */
+            text-align: center; /* Centramos el contenido */
+        }
+
+        /* Formulario centrado verticalmente */
+        form {
+            display: flex;
+            flex-direction: column; /* Apilamos los elementos en columna */
+            align-items: center; /* Centramos horizontalmente */
+        }
+
+        /* Estilos para inputs genéricos */
+        input {
+            background-color: yellow; /* Fondo amarillo */
+            color: red; /* Texto rojo */
+            display: block; /* Bloque para que respete margen */
+            margin: 10px; /* Margen alrededor */
+            padding: 8px; /* Espacio interno */
+            border: 1px solid orangered; /* Borde naranja oscuro */
+            width: 200px; /* Ancho fijo */
+            box-sizing: border-box; /* Incluye padding y borde en el ancho */
+        }
+
+        /* Estilos para botones y submit */
+        input[type="submit"],
+        input[type="button"] {
+            background-color: red; /* Fondo rojo */
+            color: yellow; /* Texto amarillo */
+            border: none; /* Sin borde */
+            padding: 10px 20px; /* Espacio interno */
+            cursor: pointer; /* Cambia cursor al pasar por encima */
+            border-radius: 5px; /* Bordes redondeados */
+            margin-top: 10px; /* Margen superior */
+            font-weight: bold; /* Texto en negrita */
+            width: auto; /* Ancho automático según contenido */
+        }
+
+        /* Estilo para input tipo range */
+        input[type="range"] {
+            width: 200px; /* Ancho del slider */
+            margin: 10px auto; /* Centrado horizontal y margen */
+            display: block; /* Bloque */
+        }
+
+        /* Títulos h2 para resultados */
+        h2 {
+            color: white; /* Texto blanco */
+            margin-top: 20px; /* Separación superior */
+            font-size: 1.5em; /* Tamaño de letra */
+        }
+
+        /* Estilo para textos de etiquetas */
+        .label-text {
+            color: white; /* Texto blanco */
+            font-weight: bold; /* Negrita */
+            font-size: 1.2em; /* Tamaño de letra */
+        }
+
+        /* Imagen de resultado */
+        img {
+            max-width: 200px; /* Tamaño máximo */
+            margin-top: 20px; /* Separación superior */
+            display: none; /* Oculta por defecto */
+            margin-left: auto;
+            margin-right: auto; /* Centrado horizontal */
+        }
+
+        /* Clase para animación fade-in */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out; /* Duración y suavidad */
+        }
+
+        /* Definición de la animación fade-in */
+        @keyframes fadeIn {
+            from { opacity: 0; } /* Comienza invisible */
+            to { opacity: 1; } /* Termina visible */
+        }
+    </style>
+</head>
+<body>
+    <div id="caja">
+        <!-- Formulario principal -->
+        <form onsubmit="Calculo(event)">
+            <!-- Peso -->
+            <span class="label-text">Peso (Kg)</span>
+            <input type="number" id="npeso" placeholder="Ej: 70" step="any"> <!-- Input para peso -->
+
+            <!-- Altura -->
+            <span class="label-text">Altura (m)</span>
+            <input type="number" id="naltura" placeholder="Ej: 1.75" step="any"> <!-- Input para altura -->
+
+            <!-- Botón calcular -->
+            <input type="submit" value="Calcular">
+
+            <!-- Botón resetear -->
+            <input type="button" value="Resetear" onclick="resetear()">
+
+            <!-- Slider IMC -->
+            <input type="range" name="pesoxx" id="pescc">
+
+            <!-- Imagen de resultado -->
+            <img id="imagen" src="" alt="Resultado">
+
+            <!-- Texto de resultado -->
+            <h2 id="resultado-texto"></h2>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function Calculo(event) {
+            event.preventDefault(); // Evita que el formulario se recargue
+
+            // Tomamos valores de inputs
+            var peso = parseFloat(document.getElementById("npeso").value); 
+            var altura = parseFloat(document.getElementById("naltura").value); 
+            var imagen = document.getElementById("imagen"); // Imagen de resultado
+            var texto = document.getElementById("resultado-texto"); // Texto de resultado
+            var pescc = document.getElementById("pescc"); // Slider IMC
+
+            // Validación de datos
+            if (isNaN(peso) || isNaN(altura) || altura <= 0) {
+                imagen.style.display = "none"; // Oculta imagen
+                texto.innerText = ""; // Vacía texto
+                alert("Por favor ingresa valores válidos"); // Alerta al usuario
+                return; // Sale de la función
+            }
+
+            // Calculamos IMC
+            var imc = (peso / (altura * altura)).toFixed(2); // Fórmula IMC
+
+            // Actualizamos slider con el IMC
+            pescc.value = imc;
+
+            // Determinamos rango de IMC y asignamos imagen y texto
+            if (imc < 18.5) {
+                imagen.src = "./img/bajopeso.jpg"; 
+                texto.innerText = `IMC: ${imc} — Estás en bajo peso. Considera mejorar tu alimentación.`;
+                texto.style.color = "lightblue";
+            } else if (imc < 24.9) {
+                imagen.src = "./img/normal.jpg"; 
+                texto.innerText = `IMC: ${imc} — ¡Excelente! Tu peso está dentro de un rango saludable.`;
+                texto.style.color = "lightgreen";
+            } else if (imc < 29.9) {
+                imagen.src = "./img/sobrepeso.jpg"; 
+                texto.innerText = `IMC: ${imc} — Estás en sobrepeso. Intenta mantener hábitos más activos.`;
+                texto.style.color = "orange";
+            } else {
+                imagen.src = "./img/obesidad.jpg"; 
+                texto.innerText = `IMC: ${imc} — Estás en obesidad. Es recomendable consultar con un profesional.`;
+                texto.style.color = "red";
+            }
+
+            // Mostramos imagen y texto con animación
+            imagen.style.display = "block"; 
+            imagen.classList.remove("fade-in"); 
+            void imagen.offsetWidth; // Reinicia animación
+            imagen.classList.add("fade-in"); 
+
+            texto.classList.remove("fade-in"); 
+            void texto.offsetWidth; 
+            texto.classList.add("fade-in"); 
+        }
+
+        // Función para resetear formulario
+        function resetear() {
+            document.getElementById("npeso").value = ""; // Limpiar peso
+            document.getElementById("naltura").value = ""; // Limpiar altura
+            document.getElementById("resultado-texto").innerText = ""; // Limpiar texto
+            document.getElementById("resultado-texto").style.color = "white"; // Color por defecto
+            document.getElementById("imagen").style.display = "none"; // Ocultar imagen
+        }
+
+        // Permite calcular presionando Enter en el campo altura
+        document.getElementById("naltura").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Evita enviar el formulario
+                Calculo(event); // Llama a la función de cálculo
+            }
+        });
+    </script>
+</body>
+</html>
