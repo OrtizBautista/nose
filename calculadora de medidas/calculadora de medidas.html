@@ -1,66 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><!-- Codificación -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Adaptable a móviles -->
-    <title>Rogelio</title>
+<!DOCTYPE html> <!-- Declara que este archivo es HTML5 -->
+<html lang="en"> <!-- Inicio del documento HTML, 'lang="en"' indica idioma principal inglés -->
+
+<head> <!-- Inicio de la cabecera -->
+    <meta charset="UTF-8"> <!-- Define la codificación de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Permite que la página se vea bien en móviles -->
+    <title>Rogelio</title> <!-- Título que aparece en la pestaña del navegador -->
+
+    <!-- Importa la fuente Roboto desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* ---------------- VARIABLES POR TEMA ---------------- */
+
+        /* ------------------ TEMAS ------------------ */
+
+        /* Tema 1: colores Aqua */
         .tema1 {
-            --color-input: rgba(0, 255, 242, 0.7);
-            --color-texto: rgb(198, 255, 255);
-            --color-boton: rgba(108, 250, 139, 0.7);
-            --color-boton-texto: rgb(213, 253, 222);
-            --color-select: rgba(255, 173, 128, 0.682);
+            --color-input: rgba(0, 255, 242, 0.7); /* Fondo de inputs */
+            --color-texto: rgb(198, 255, 255); /* Color del texto */
+            --color-boton: rgba(108, 250, 139, 0.7); /* Fondo de botones */
+            --color-boton-texto: rgb(213, 253, 222); /* Color de texto en botones */
+            --color-select: rgba(255, 173, 128, 0.682); /* Fondo de selectores */
+            background-color: rgba(0, 255, 242, 0.1); /* Color de fondo del body para transición suave */
         }
 
+        /* Tema 2: colores Rosa */
         .tema2 {
             --color-input: rgba(255, 192, 203, 0.7);
             --color-texto: rgb(255, 240, 245);
             --color-boton: rgba(255, 105, 180, 0.7);
             --color-boton-texto: white;
             --color-select: rgba(255, 182, 193, 0.7);
+            background-color: rgba(255, 192, 203, 0.1);
         }
 
+        /* Tema 3: colores Oscuros */
         .tema3 {
             --color-input: rgba(50, 50, 50, 0.7);
             --color-texto: #f0f0f0;
             --color-boton: rgba(100, 100, 100, 0.7);
             --color-boton-texto: white;
             --color-select: rgba(80, 80, 80, 0.7);
+            background-color: rgba(50, 50, 50, 0.7);
         }
 
-        /* ---------------- ESTILOS GENERALES ---------------- */
+        /* Tema automático según sistema */
+        body.auto {
+            --color-input: rgba(240, 240, 240, 0.9);
+            --color-texto: #000000;
+            --color-boton: rgba(0, 120, 215, 0.8);
+            --color-boton-texto: white;
+            --color-select: rgba(200, 200, 200, 0.8);
+            background-color: rgba(240, 240, 240, 0.1);
+        }
+
+        /* Ajustes automáticos para modo oscuro del sistema */
+        @media (prefers-color-scheme: dark) {
+            body.auto {
+                --color-input: rgba(40, 40, 40, 0.9);
+                --color-texto: #f0f0f0;
+                --color-boton: rgba(13, 110, 253, 0.8);
+                --color-boton-texto: white;
+                --color-select: rgba(80, 80, 80, 0.9);
+                background-color: rgba(40, 40, 40, 0.9);
+            }
+        }
+
+        /* ------------------ ESTILOS GENERALES ------------------ */
+
         body {
-            background-image: url(./assets/background.jpeg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: 'Roboto', sans-serif; /* Fuente principal */
+            background-image: url(./assets/background.jpeg); /* Imagen de fondo */
+            background-repeat: no-repeat; /* No repetir imagen */
+            background-size: cover; /* Ajusta imagen para cubrir todo el viewport */
+            display: flex; /* Flexbox para centrar contenido */
+            justify-content: center; /* Centrado horizontal */
+            align-items: center; /* Centrado vertical */
+            height: 100vh; /* Altura igual a la ventana */
+            margin: 0; /* Sin márgenes por defecto */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Animación suave de cambios de color */
         }
 
         #caja {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+            padding: 20px; /* Espaciado interno */
+            border-radius: 10px; /* Bordes redondeados */
+            text-align: center; /* Centrar contenido */
         }
 
+        /* Inputs numéricos */
         input[type="number"] {
-            background-color: var(--color-input);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--color-input); /* Usa la variable según tema */
             color: var(--color-texto);
             margin: 5px;
             padding: 10px 20px;
             border: solid var(--color-texto);
             box-sizing: border-box;
-            border-radius: 100px;
+            border-radius: 100px; /* Bordes tipo "pastilla" */
         }
 
+        /* Botones */
         input[type="button"] {
+            font-family: 'Roboto', sans-serif;
             background-color: var(--color-boton);
             color: var(--color-boton-texto);
             margin: 5px;
@@ -68,10 +109,12 @@
             border: solid var(--color-boton-texto);
             box-sizing: border-box;
             border-radius: 100px;
-            cursor: pointer;
+            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
         }
 
+        /* Selectores */
         select {
+            font-family: 'Roboto', sans-serif;
             background-color: var(--color-select);
             color: var(--color-texto);
             margin: 5px;
@@ -82,7 +125,9 @@
             cursor: pointer;
         }
 
+        /* Párrafo de resultado */
         p {
+            font-family: 'Roboto', sans-serif;
             color: white;
             font-size: 20px;
             font-weight: bold;
@@ -90,92 +135,153 @@
             text-align: center;
         }
 
+        /* Placeholder dentro de inputs */
         ::placeholder {
-            color: white;
+            color: var(--color-texto); /* Color según tema */
             opacity: 1;
         }
 
-        /* Selector de tema */
+        /* Margen inferior del selector de temas */
         #selector-tema {
             margin-bottom: 15px;
+        }
+
+        /* Transición suave para inputs, selects y botones */
+        input, select, input[type="button"] {
+            transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
         }
     </style>
 </head>
 
 <body>
     <div id="caja">
-        <!-- Selector de temas -->
+        <!-- Selector de tema -->
         <select id="selector-tema" onchange="cambiarTema()">
             <option value="tema1">Tema Aqua</option>
             <option value="tema2">Tema Rosa</option>
             <option value="tema3">Tema Oscuro</option>
+            <option value="auto">Tema Automático</option>
         </select>
 
-        <!-- Input para ingresar el valor a convertir -->
+        <!-- Input para valor -->
         <input type="number" id="medida" placeholder="Ingresa un valor">
 
         <!-- Unidad de origen -->
         <select id="unidad_de_origen">
             <option value=""></option>
+            <option value="nm">Nanómetros</option>
+            <option value="um">Micrómetros</option>
+            <option value="mm">Milímetros</option>
             <option value="m">Metros</option>
             <option value="cm">Centímetros</option>
             <option value="km">Kilómetros</option>
+            <option value="in">Pulgadas</option>
+            <option value="ft">Pies</option>
+            <option value="yd">Yardas</option>
+            <option value="mi">Millas</option>
+            <option value="nmi">Milla náutica</option>
         </select>
 
         <!-- Unidad de destino -->
         <select id="unidad_de_destino">
             <option value=""></option>
+            <option value="nm">Nanómetros</option>
+            <option value="um">Micrómetros</option>
+            <option value="mm">Milímetros</option>
             <option value="m">Metros</option>
             <option value="cm">Centímetros</option>
             <option value="km">Kilómetros</option>
+            <option value="in">Pulgadas</option>
+            <option value="ft">Pies</option>
+            <option value="yd">Yardas</option>
+            <option value="mi">Millas</option>
+            <option value="nmi">Milla náutica</option>
         </select>
 
         <!-- Botón para calcular -->
         <input type="button" id="btnCalcular" value="=" onclick="calcular()">
 
-        <!-- Resultado -->
+        <!-- Párrafo donde se mostrará el resultado -->
         <p id="resultado"></p>
     </div>
 
     <script>
-        function calcular() {
-            let valor = parseFloat(document.getElementById("medida").value);
-            let origen = document.getElementById("unidad_de_origen").value;
-            let destino = document.getElementById("unidad_de_destino").value;
+        // Inicializamos variable global para saber si hubo una conversión previa
+        window.ultimaConversion = false;
 
+        // Función para calcular conversión de unidades
+        function calcular() {
+            let valor = parseFloat(document.getElementById("medida").value); // Obtiene valor del input y lo convierte a número
+            let origen = document.getElementById("unidad_de_origen").value; // Unidad de origen
+            let destino = document.getElementById("unidad_de_destino").value; // Unidad de destino
+
+            // Validación de campos
             if (isNaN(valor) || origen === "" || destino === "") {
                 document.getElementById("resultado").innerText = "Por favor, completa todos los campos.";
-                return;
+                return; // Sale de la función
             }
 
-            let valorEnMetros;
+            let valorEnMetros; // Variable intermedia
 
-            if (origen === "m") valorEnMetros = valor;
+            // Conversión de unidad de origen a metros
+            if (origen === "nm") valorEnMetros = valor * 1e-9;
+            else if (origen === "um") valorEnMetros = valor * 1e-6;
+            else if (origen === "mm") valorEnMetros = valor / 1000;
             else if (origen === "cm") valorEnMetros = valor / 100;
+            else if (origen === "m") valorEnMetros = valor;
             else if (origen === "km") valorEnMetros = valor * 1000;
+            else if (origen === "in") valorEnMetros = valor * 0.0254;
+            else if (origen === "ft") valorEnMetros = valor * 0.3048;
+            else if (origen === "yd") valorEnMetros = valor * 0.9144;
+            else if (origen === "mi") valorEnMetros = valor * 1609.34;
+            else if (origen === "nmi") valorEnMetros = valor * 1852;
 
-            let resultado;
+            let resultado; // Resultado final
 
-            if (destino === "m") resultado = valorEnMetros;
+            // Conversión de metros a unidad de destino
+            if (destino === "nm") resultado = valorEnMetros / 1e-9;
+            else if (destino === "um") resultado = valorEnMetros / 1e-6;
+            else if (destino === "mm") resultado = valorEnMetros * 1000;
             else if (destino === "cm") resultado = valorEnMetros * 100;
+            else if (destino === "m") resultado = valorEnMetros;
             else if (destino === "km") resultado = valorEnMetros / 1000;
+            else if (destino === "in") resultado = valorEnMetros / 0.0254;
+            else if (destino === "ft") resultado = valorEnMetros / 0.3048;
+            else if (destino === "yd") resultado = valorEnMetros / 0.9144;
+            else if (destino === "mi") resultado = valorEnMetros / 1609.34;
+            else if (destino === "nmi") resultado = valorEnMetros / 1852;
 
+            // Mostrar resultado en el párrafo
             document.getElementById("resultado").innerText =
-                "Resultado: " + resultado + " " + destino;
+                "Resultado: " + resultado.toLocaleString('es-AR') + " " + destino;
+
+            window.ultimaConversion = true; // Marca que se realizó una conversión
         }
 
+        // Función para cambiar tema
         function cambiarTema() {
-            const tema = document.getElementById("selector-tema").value;
+            const tema = document.getElementById("selector-tema").value; // Obtiene tema seleccionado
             const body = document.body;
 
-            body.classList.remove("tema1", "tema2", "tema3");
-            body.classList.add(tema);
+            body.classList.remove("tema1", "tema2", "tema3", "auto"); // Elimina clases anteriores
+            body.classList.add(tema); // Aplica clase seleccionada
         }
 
-        // Tema por defecto al cargar
+        // Recalcular automáticamente al cambiar unidad de origen
+        document.getElementById("unidad_de_origen").addEventListener("change", () => {
+            if (window.ultimaConversion) calcular();
+        });
+
+        // Recalcular automáticamente al cambiar unidad de destino
+        document.getElementById("unidad_de_destino").addEventListener("change", () => {
+            if (window.ultimaConversion) calcular();
+        });
+
+        // Al cargar página, aplicar tema automático por defecto
         window.onload = () => {
-            document.body.classList.add("tema1");
-        };
+            document.body.classList.add("auto");
+        }
     </script>
 </body>
+
 </html>
